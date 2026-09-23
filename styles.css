@@ -20,6 +20,14 @@ input::placeholder,textarea::placeholder{color:#6F7A82}
 .navbtn:hover{border-color:#fff}
 .navbtn[aria-disabled="true"]{opacity:.35;cursor:default}
 @media (prefers-reduced-motion: reduce){.om-track{animation:none}.tile-art{transition:none}}
+.cvid-v{filter:grayscale(1) contrast(1.05);opacity:0;transition:filter .6s ease,opacity .4s ease,transform .6s ease}
+.cvid.has-video .cvid-v{opacity:1}
+.cvid.is-on .cvid-v{filter:grayscale(0) contrast(1);transform:scale(1.03)}
+.cvid-badge{transition:opacity .3s ease}
+.cvid.is-on .cvid-badge{opacity:0}
+.cvid:focus-visible{outline:none}
+.cvid:focus-visible .cvid-frame{outline:2px solid #C8FDDC;outline-offset:3px}
+@media (prefers-reduced-motion: reduce){.cvid-v{transition:none}.cvid.is-on .cvid-v{transform:none}}
 
 .om-slow{animation-duration:95s}
 .wm-wrap{position:relative;display:block;isolation:isolate;overflow:hidden}

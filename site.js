@@ -31,6 +31,28 @@
     document.getElementById('press-next').addEventListener('click',function(){tr.scrollBy({left:step(),behavior:'smooth'});});
     tr.addEventListener('scroll',upd); window.addEventListener('resize',upd); upd();
   }
+  // sizzle reel: show the player only once sizzle.mp4 exists
+  var rv=document.getElementById('reel-video');
+  if(rv){ var showRv=function(){ rv.style.opacity='1'; rv.style.pointerEvents='auto'; }; rv.addEventListener('loadedmetadata',showRv); if(rv.readyState>=1) showRv(); }
+  // creator spotlight videos: black & white until hover/focus, then play in color
+  var cards=[].slice.call(document.querySelectorAll('.cvid'));
+  var noHover=window.matchMedia('(hover: none)').matches, reduce=window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  cards.forEach(function(c){
+    var v=c.querySelector('video'); if(!v) return;
+    v.addEventListener('loadedmetadata',function(){c.classList.add('has-video');});
+    v.addEventListener('loadeddata',function(){c.classList.add('has-video');});
+    if(!v.getAttribute('data-seeked')){ v.setAttribute('data-seeked','1'); v.addEventListener('loadedmetadata',function(){ try{ if(v.currentTime===0) v.currentTime=0.05; }catch(e){} },{once:true}); }
+    if(v.readyState>=1){ c.classList.add('has-video'); try{ if(v.currentTime===0) v.currentTime=0.05; }catch(e){} }
+    function on(){c.classList.add('is-on'); if(c.classList.contains('has-video')){var p=v.play(); if(p&&p.catch)p.catch(function(){});}}
+    function off(){c.classList.remove('is-on'); v.pause();}
+    c.addEventListener('mouseenter',on); c.addEventListener('mouseleave',off);
+    c.addEventListener('focus',on); c.addEventListener('blur',off);
+    c.addEventListener('touchstart',function(){ if(c.classList.contains('is-on')) off(); else { cards.forEach(function(o){ if(o!==c){o.classList.remove('is-on'); var ov=o.querySelector('video'); if(ov) ov.pause();} }); on(); } },{passive:true});
+  });
+  if(noHover && !reduce && 'IntersectionObserver' in window){
+    var io=new IntersectionObserver(function(es){es.forEach(function(e){var c=e.target,v=c.querySelector('video'); if(!v) return; if(e.intersectionRatio>0.75){c.classList.add('is-on'); if(c.classList.contains('has-video')){var p=v.play(); if(p&&p.catch)p.catch(function(){});}} else {c.classList.remove('is-on'); v.pause();}});},{threshold:[0,0.75,1]});
+    cards.forEach(function(c){io.observe(c);});
+  }
   // contact
   document.querySelectorAll('.kind').forEach(function(b){b.addEventListener('click',function(){document.querySelectorAll('.kind').forEach(function(x){x.setAttribute('aria-pressed',x===b?'true':'false');});document.getElementById('c-detail-label').textContent=b.getAttribute('data-hint');});});
   var send=document.getElementById('c-send'),reset=document.getElementById('c-reset');
