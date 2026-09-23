@@ -1,0 +1,10 @@
+# ads.txt for oceansidemedia.net
+# Authorized Digital Sellers (IAB Tech Lab)
+# Replace the example lines with the exact entries your ad partners provide.
+
+OWNERDOMAIN=oceansidemedia.net
+CONTACT=legal@oceansidemedia.net
+
+# Format: <ad system domain>, <publisher account ID>, <DIRECT or RESELLER>, <certification authority ID>
+# example-exchange.com, pub-0000000000000000, DIRECT, 0000000000000000
+# example-ssp.com, 00000, RESELLER
