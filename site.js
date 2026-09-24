@@ -31,6 +31,17 @@
     document.getElementById('press-next').addEventListener('click',function(){tr.scrollBy({left:step(),behavior:'smooth'});});
     tr.addEventListener('scroll',upd); window.addEventListener('resize',upd); upd();
   }
+  // hero logo: waves video inside the letters; falls back to the colored logo
+  var hl=document.querySelector('.hero-logo'), wv=hl&&hl.querySelector('.wm-video');
+  if(wv){
+    if(window.matchMedia('(prefers-reduced-motion: reduce)').matches){ wv.pause(); wv.removeAttribute('autoplay'); }
+    else {
+      var on=function(){ hl.classList.add('has-waves'); }, off=function(){ hl.classList.remove('has-waves'); };
+      wv.addEventListener('playing',on); wv.addEventListener('error',off); wv.addEventListener('emptied',off);
+      if(!wv.paused && wv.readyState>=3) on();
+      var pp=wv.play(); if(pp&&pp.catch) pp.catch(off);
+    }
+  }
   // sizzle reel: show the player only once sizzle.mp4 exists
   var rv=document.getElementById('reel-video');
   if(rv){ var showRv=function(){ rv.style.opacity='1'; rv.style.pointerEvents='auto'; }; rv.addEventListener('loadedmetadata',showRv); if(rv.readyState>=1) showRv(); }
