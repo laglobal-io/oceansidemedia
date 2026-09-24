@@ -20,6 +20,13 @@ input::placeholder,textarea::placeholder{color:#6F7A82}
 .navbtn:hover{border-color:#fff}
 .navbtn[aria-disabled="true"]{opacity:.35;cursor:default}
 @media (prefers-reduced-motion: reduce){.om-track{animation:none}.tile-art{transition:none}}
+.om-logo{position:relative;display:inline-flex;transform-origin:left center;will-change:transform}
+.heromark.om-logo{display:block!important;transform-origin:center;cursor:default}
+.om-logo::after{content:"oceanside";position:absolute;left:0;top:0;white-space:nowrap;pointer-events:none;background:linear-gradient(90deg,#C8FDDC,#91BCFA 70%,#B9D3FF);-webkit-background-clip:text;background-clip:text;color:transparent;clip-path:inset(0 100% 0 0);transition:clip-path .55s cubic-bezier(.65,0,.35,1)}
+.om-logo:hover::after,.om-logo:focus-visible::after{clip-path:inset(0 0 0 0)}
+.om-logo:hover,.om-logo:focus-visible{animation:om-pop .6s cubic-bezier(.34,1.56,.64,1) forwards}
+@keyframes om-pop{0%{transform:scale(1)}40%{transform:translateY(-3px) scale(1.08)}70%{transform:translateY(0) scale(.98)}100%{transform:translateY(-1px) scale(1.03)}}
+@media (prefers-reduced-motion: reduce){.om-logo:hover,.om-logo:focus-visible{animation:none}.om-logo::after{transition:none}}
 .cvid-v{filter:grayscale(1) contrast(1.05);opacity:0;transition:filter .6s ease,opacity .4s ease,transform .6s ease}
 .cvid.has-video .cvid-v{opacity:1}
 .cvid.is-on .cvid-v{filter:grayscale(0) contrast(1);transform:scale(1.03)}
